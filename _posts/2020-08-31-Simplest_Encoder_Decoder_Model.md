@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Simplest Encoder Decoder Model
+title: '[TH:DL] Simplest Encoder Decoder Model'
 published: true
 ---
 
@@ -10,7 +10,7 @@ This post is going to present the simplest Encoder-Decoder model which reproduce
 </p>
 
 
-Keywords:
+Themes:
 
 1. Deep Learning
 2. Encoder/Decoder
@@ -18,7 +18,6 @@ Keywords:
 4. NLP
 
 <!--more-->
-
 
 ---
 
@@ -53,5 +52,3 @@ Enter text in [Markdown](http://daringfireball.net/projects/markdown/). Use the 
 ## References
 
 1. [Deploying a seq2seq model with torchscript](https://pytorch.org/tutorials/beginner/deploy_seq2seq_hybrid_frontend_tutorial.html)
-
-
