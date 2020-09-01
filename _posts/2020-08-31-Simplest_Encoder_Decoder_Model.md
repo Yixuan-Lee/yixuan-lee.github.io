@@ -6,6 +6,10 @@ published: true
 
 This post is going to present the simplest Encoder-Decoder model which reproduces a set of strings. Additionally, this post will also present the purpose of each layer used in Encoder and Decoder.
 
+<p align="center">
+<img src="/assets/2020-08-31-simple_encoder_decoder/seq2seq_model.png" alt="Simplest encoder-decoder architecture." width="800" >
+</p>
+
 
 Keywords:
 
@@ -20,10 +24,6 @@ Keywords:
 ---
 
 ## 1. Sequence-to-Sequence model
-
-<p align="center">
-<img src="/assets/2020-08-31-simple_encoder_decoder/seq2seq_model.png" alt="Simplest encoder-decoder architecture." width="800" >
-</p>
 
 Enter text in [Markdown](http://daringfireball.net/projects/markdown/). Use the toolbar above, or click the **?** button for formatting help.
 
