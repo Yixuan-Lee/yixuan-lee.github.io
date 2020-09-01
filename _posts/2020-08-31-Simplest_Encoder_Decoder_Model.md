@@ -3,7 +3,7 @@ published: false
 ---
 ---
 layout: post
-title: [Topic: Deep Learning]
+title: \[Topic: Deep Learning\] Simplest Encoder Decoder Model
 ---
 
 This post is going to present the simplest Encoder-Decoder model which reproduces a set of strings. Additionally, this post will also present the purpose of each layer used in Encoder and Decoder
