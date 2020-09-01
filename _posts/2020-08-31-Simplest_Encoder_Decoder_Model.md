@@ -1,14 +1,14 @@
 ---
 published: false
 ---
----
-layout: post
-title: \[Topic: Deep Learning\] Simplest Encoder Decoder Model
----
+|  layout  |  title  |
+|----------|---------|
+|   post   | \[Topic: Deep Learning\] **Simplest Encoder Decoder Model** |
+
 
 This post is going to present the simplest Encoder-Decoder model which reproduces a set of strings. Additionally, this post will also present the purpose of each layer used in Encoder and Decoder
 
-*Keywords*: 
+Keywords: 
 
 1. Deep Learning
 2. Encoder/Decoder
@@ -20,6 +20,8 @@ This post is going to present the simplest Encoder-Decoder model which reproduce
 </p>
 
 <!--more-->
+
+---
 
 ## 1. Sequence-to-Sequence model
 
