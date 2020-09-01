@@ -8,7 +8,7 @@ I am a graduate student, majoring in Computer Science at Concordia University. I
 
 ### More Information
 
-For more details about me, please view my LinkedIn profile, [here](linkedin.com/in/yixuan-lee)
+For more details about me, please view my LinkedIn profile, [here](https://linkedin.com/in/yixuan-lee)
 
 ### Contact me
 
