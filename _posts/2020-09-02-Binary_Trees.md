@@ -22,6 +22,16 @@ Asset directory: [/assets/2020-09-02-Binary_Trees/](https://github.com/Yixuan-Le
 
 ## 1. Binary Search Trees (BST)
 
+Binary Search Tree (BST) is a sorted binary tree where the rule `left node < root < right node` for every node in the tree satisfies.
+
+### 1.1 Attributes
+
+### 1.2 Implementation
+
+### 1.3 Traversal
+
+
+
 
 
 ---
