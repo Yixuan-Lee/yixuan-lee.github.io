@@ -6,7 +6,7 @@ published: true
 
 This post is going to discuss Binary Search Tree (BST) and present two implementation on BST in C++14, Array-Based and Linked-Node-Based.
 <p align="center">
-<img src="/assets/2020-09-02-Binary_Trees/gifs/binary-search-tree.gif" alt="Binary Search Tree animation" width="550" >
+<img src="/assets/2020-09-02-Binary_Trees/gifs/binary-search-tree.gif" alt="Binary Search Tree animation" width="450" >
 </p>
 
 Keywords:
@@ -45,4 +45,4 @@ Code directory: [/assets/2020-09-02-Binary_Trees/array_based/](https://github.co
 
 1. [Binary Search Tree GIF source](https://blog.penjee.com/5-gifs-to-understand-binary-search-tree/)
 
-2. [The Annotated Encoder-Decoder with Attention](https://bastings.github.io/annotated_encoder_decoder/)
+2. [Binary Search Tree Attributes](https://www.cnblogs.com/WindSun/p/10859055.html)
