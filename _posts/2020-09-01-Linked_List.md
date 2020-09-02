@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[TH:DL] Simplest Encoder Decoder Model'
+title: '[TH:DS] Linked List Implementation'
 published: true
 ---
 
