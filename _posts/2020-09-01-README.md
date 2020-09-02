@@ -11,7 +11,7 @@ This is the hello world project. This post will present all theme abbreviations 
 |     Abbreviation    |    Theme Explanation    |
 | ------------------- | ----------------------- |
 |      \[TH:AL\]      |        Algorithms       |
-|      \[TH:BG\]      |         Big Data        |
+|      \[TH:BD\]      |         Big Data        |
 |      \[TH:DL\]      |      Deep Learning      |
 |      \[TH:DS\]      |      Data Structures    |
 |      \[TH:LM\]      |      Library Manual     |
