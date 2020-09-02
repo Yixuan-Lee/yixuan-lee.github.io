@@ -46,6 +46,8 @@ public:
     ///////////////////  Auxiliary Operations  ///////////////////
     bool isEmpty() const;
 
+    bool isFull() const;
+
     size_t size() const;
 
     T top() const;
@@ -128,7 +130,7 @@ ArrayStack<T>& ArrayStack<T>::operator=(ArrayStack &&as) noexcept {
 ///////////////////  Principle Operations  ///////////////////
 template<typename T>
 void ArrayStack<T>::push(T e) {
-    if (count == capacity) {
+    if (isFull()) {
         // double the capacity and copy
         doublesize();
     }
@@ -150,6 +152,11 @@ T ArrayStack<T>::pop() {
 template<typename T>
 bool ArrayStack<T>::isEmpty() const {
     return this->size() == 0;
+}
+
+template<typename T>
+bool ArrayStack<T>::isFull() const {
+    return this->size() == this->capacity;
 }
 
 template<typename T>
@@ -196,6 +203,7 @@ void ArrayStack<T>::deepcopy(const ArrayStack &as) {
         this->arr[i] = as.arr[i];
     }
     this->count = as.count;
+    this->capacity = as.capacity;
 }
 
 template<typename T>
@@ -209,6 +217,7 @@ void ArrayStack<T>::deepmove(ArrayStack &as) {
         this->arr[i] = std::move(as.arr[i]);
     }
     this->count = as.count;
+    this->capacity = as.capacity;
 
     // reset as to stable state
     as.arr = nullptr;
@@ -218,6 +227,7 @@ void ArrayStack<T>::deepmove(ArrayStack &as) {
 template<typename T>
 void ArrayStack<T>::doublesize() {
     size_t doubleCapacity = 2 * this->capacity;
+    this->capacity = doubleCapacity;
 
     // allocate new array
     T *temp = this->arr;
