@@ -74,7 +74,7 @@ private:
 };
 
 ///////////////////  Function Implementation  ///////////////////
-
+// constructor
 template<typename T>
 ArrayStack<T>::ArrayStack(size_t size) : arr {new T[size]}, count {0}, capacity {size} {
 
