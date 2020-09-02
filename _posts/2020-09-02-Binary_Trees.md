@@ -6,7 +6,7 @@ published: true
 
 This post is going to discuss Binary Search Tree (BST) and present two implementation on BST in C++14, Array-Based and Linked-Node-Based.
 <p align="center">
-<img src="/assets/2020-09-02-Binary_Trees/gifs/binary-search-tree.gif" alt="Binary Search Tree animation" width="600" >
+<img src="/assets/2020-09-02-Binary_Trees/gifs/binary-search-tree.gif" alt="Binary Search Tree animation" width="550" >
 </p>
 
 Keywords:
