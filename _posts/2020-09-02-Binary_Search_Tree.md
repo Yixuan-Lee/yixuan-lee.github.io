@@ -1,7 +1,9 @@
 ---
 layout: post
-title: '[TH:DS] Binary Search Tree (BST) Implementation'
+title: BST Implementation
 published: true
+date: 2020-09-02T00:00:00.000Z
+tags: data-structures
 ---
 
 This post is going to discuss Binary Search Tree (BST) and present two implementation on BST in C++14, Array-Based and Linked-Node-Based.
