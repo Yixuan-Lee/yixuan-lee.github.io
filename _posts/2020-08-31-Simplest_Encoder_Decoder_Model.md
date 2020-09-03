@@ -1,7 +1,9 @@
 ---
 layout: post
-title: '[TH:DL] Simplest Encoder Decoder Model'
+title: Simplest Encoder-Decoder Model
 published: true
+date: 2020-09-02T00:00:00.000Z
+tags: deep-learning
 ---
 
 This post is going to present the simplest Encoder-Decoder model which reproduces a set of strings. Additionally, this post will also present the purpose of each layer used in Encoder and Decoder.
@@ -56,4 +58,3 @@ Enter text in [Markdown](http://daringfireball.net/projects/markdown/). Use the 
 1. [Deploying a seq2seq model with torchscript](https://pytorch.org/tutorials/beginner/deploy_seq2seq_hybrid_frontend_tutorial.html)
 
 2. [The Annotated Encoder-Decoder with Attention](https://bastings.github.io/annotated_encoder_decoder/)
-

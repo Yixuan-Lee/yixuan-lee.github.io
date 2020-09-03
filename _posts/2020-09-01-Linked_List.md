@@ -1,7 +1,9 @@
 ---
 layout: post
-title: '[TH:DS] Linked List Implementation'
+title: Linkedlist Implementation
 published: true
+date: 2020-09-01T00:00:00.000Z
+tags: data-structures
 ---
 
 This post is going to implement Linked List in C++14.
