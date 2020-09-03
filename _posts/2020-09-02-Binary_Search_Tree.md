@@ -49,7 +49,6 @@ Attribute 4: For a complete BST containing n nodes, if we numbering nodes consec
 4.6) current node is at the level $$\lceil log_2{index} + 1 \rceil$$
 
 
-
 ### 1.2 Implementation
 
 ### 1.3 Traversal
@@ -64,10 +63,27 @@ Attribute 4: For a complete BST containing n nodes, if we numbering nodes consec
 
 Code directory: [/assets/2020-09-02-Binary_Trees/array_based/](https://github.com/Yixuan-Lee/yixuan-lee.github.io/tree/master/assets/2020-09-02-Binary_Trees/src/array_based)
 
+In this implementation, an array is used to represent a pseudo-complete BST as shown below.
+
+<img src="/assets/2020-09-02-Binary_Trees/imgs/array-bst.png" width=300>
+
+
+
 
 ---
 
 ## 3. Implementation: Linked-Node-based BST
+
+Code directory: [/assets/2020-09-02-Binary_Trees/linked_nodes_based/](https://github.com/Yixuan-Lee/yixuan-lee.github.io/tree/master/assets/2020-09-02-Binary_Trees/src/linked_nodes_based)
+
+In this implementation, each node is split into three parts:
+
+1. left child pointer
+2. data
+3. right child pointer
+
+<img src="/assets/2020-09-02-Binary_Trees/imgs/linked-nodes-bst.png" width=300>
+
 
 ---
 
