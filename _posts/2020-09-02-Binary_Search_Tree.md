@@ -79,7 +79,33 @@ Attribute 4: For a complete BST containing n nodes, if we numbering nodes consec
 4.6) current node is at the level $$\lceil log_2{index} + 1 \rceil$$
 
 
-### 1.3 Traversal
+### 1.3 Remove Node in BST
+
+When removing a node in BST, it is mandatory to maintain the tree to be still BST-valid after deletion. There are 3 scenarios in this case:
+
+<p align="center">
+<img src="/assets/2020-09-02-Binary_Trees/imgs/bst-remove-case-1.png" alt="BST deletion case 1" width="450" >
+</p>
+
+#### Scenario 1. left node: The node to be deleted has no children.
+
+Simply remove the node from BST and set its parent's corresponding child pointer to nullptr.
+
+#### Scenario 2. (partial) internal node: The node to be deleted has 1 child.
+
+If the child is the left child of the partial internal node, then directly link the left child node to the parent of the removed node.
+
+If the child is the right child of the partial internal node, then directly link the right child node to the parent of the reomved node.
+
+<p align="center">
+<img src="/assets/2020-09-02-Binary_Trees/imgs/bst-remove-case-2.png" alt="BST deletion case 2" width="450" >
+</p>
+
+
+#### Scenario 3. (complete) internal node: The node to be deleted has 2 children.
+
+
+### 1.4 BST Traversal
 
 
 
@@ -128,3 +154,6 @@ In this implementation, each node is split into three parts:
 2. [Binary Search Tree Attributes](https://www.cnblogs.com/WindSun/p/10859055.html)
 
 3. [Binary Search Tree Wikipedia](https://en.wikipedia.org/wiki/Binary_search_tree)
+
+4. [BST Removal Operation](http://www.algolist.net/Data_structures/Binary_search_tree/Removal)
+
