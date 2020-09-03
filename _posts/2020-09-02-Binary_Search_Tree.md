@@ -167,3 +167,6 @@ In this implementation, each node is split into three parts:
 
 4. [BST Removal Operation](http://www.algolist.net/Data_structures/Binary_search_tree/Removal)
 
+5. [BST Insertion Operation](https://www.techiedelight.com/insertion-in-bst/)
+
+6. 
