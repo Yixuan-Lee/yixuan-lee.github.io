@@ -2,7 +2,7 @@
 layout: post
 title: BST Implementation
 published: true
-date: {}
+date: 2020-09-02T00:00:00.000Z
 tags: data-structures
 ---
 
