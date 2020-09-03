@@ -98,11 +98,21 @@ If the child is the left child of the partial internal node, then directly link 
 If the child is the right child of the partial internal node, then directly link the right child node to the parent of the reomved node.
 
 <p align="center">
-<img src="/assets/2020-09-02-Binary_Trees/imgs/bst-remove-case-2.png" alt="BST deletion case 2" width="450" >
+<img src="/assets/2020-09-02-Binary_Trees/imgs/bst-remove-case-2.png" alt="BST deletion case 2" width="550" >
 </p>
 
 
 #### Scenario 3. (complete) internal node: The node to be deleted has 2 children.
+
+Step 1: find the node with minimum value at the right subtree of the removed node.
+
+Step 2: replace the value of the node to be removed with the minimum value
+
+Step 3: remove the node with minimum value at the right subtree
+
+<p align="center">
+<img src="/assets/2020-09-02-Binary_Trees/imgs/bst-remove-case-3.png" alt="BST deletion case 3" width="550" >
+</p>
 
 
 ### 1.4 BST Traversal
