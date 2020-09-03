@@ -26,6 +26,8 @@ Binary Search Tree (BST) is a sorted binary tree where the rule `left node < roo
 
 ### 1.1 Attributes
 
+Attribute 1: At level i, the most nodes it can have is 
+
 ### 1.2 Implementation
 
 ### 1.3 Traversal
