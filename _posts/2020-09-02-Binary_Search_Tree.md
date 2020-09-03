@@ -83,13 +83,13 @@ Attribute 4: For a complete BST containing n nodes, if we numbering nodes consec
 
 When removing a node in BST, it is mandatory to maintain the tree to be still BST-valid after deletion. There are 3 scenarios in this case:
 
-<p align="center">
-<img src="/assets/2020-09-02-Binary_Trees/imgs/bst-remove-case-1.png" alt="BST deletion case 1" width="450" >
-</p>
-
 #### Scenario 1. left node: The node to be deleted has no children.
 
 Simply remove the node from BST and set its parent's corresponding child pointer to nullptr.
+
+<p align="center">
+<img src="/assets/2020-09-02-Binary_Trees/imgs/bst-remove-case-1.png" alt="BST deletion case 1" width="350" >
+</p>
 
 #### Scenario 2. (partial) internal node: The node to be deleted has 1 child.
 
@@ -111,7 +111,7 @@ Step 2: replace the value of the node to be removed with the minimum value
 Step 3: remove the node with minimum value at the right subtree
 
 <p align="center">
-<img src="/assets/2020-09-02-Binary_Trees/imgs/bst-remove-case-3.png" alt="BST deletion case 3" width="550" >
+<img src="/assets/2020-09-02-Binary_Trees/imgs/bst-remove-case-3.png" alt="BST deletion case 3" width="700" >
 </p>
 
 
