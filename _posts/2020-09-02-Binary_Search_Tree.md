@@ -24,14 +24,14 @@ Asset directory: [/assets/2020-09-02-Binary_Trees/](https://github.com/Yixuan-Le
 
 ## 1. Binary Search Trees (BST)
 
-Binary Search Tree (BST) is a sorted binary tree where the rule `left node < root < right node` for every node in the tree satisfies.
+Binary Search Tree (BST) is a sorted binary tree where the rule $$left node \le root \le right node$$ for every node in the tree satisfies (assuming node values are all unique in BST). 
 
 ### 1.1 Operations
 
 ### 1.1.1 Principle Operations
 
 1. insert
-2. delete
+2. remove
 3. searchByValue
 4. preOrder
 5. inOrder
@@ -43,12 +43,17 @@ Binary Search Tree (BST) is a sorted binary tree where the rule `left node < roo
 ### 1.1.2 Auxiliary Operations
 
 1. isEmpty
-2. getParent
-3. getLeftChild
-4. getRightChild
-5. getNodesNumber
-6. toString
+2. isBST
+3. getParent
+4. getLeftChild
+5. getRightChild
+6. countNodes
 7. destroyTree
+
+### 1.1.3 Auxiliary Functions
+
+1. isEqual
+2. deepcopy
 
 
 ### 1.2 Attributes
@@ -121,3 +126,7 @@ In this implementation, each node is split into three parts:
 1. [Binary Search Tree GIF source](https://blog.penjee.com/5-gifs-to-understand-binary-search-tree/)
 
 2. [Binary Search Tree Attributes](https://www.cnblogs.com/WindSun/p/10859055.html)
+
+3. [Binary Search Tree Wikipedia](https://en.wikipedia.org/wiki/Binary_search_tree)
+
+
