@@ -2,7 +2,7 @@
 layout: post
 title: BST Implementation
 published: true
-date: 2020-09-02T00:00:00.000Z
+date: {}
 tags: data-structures
 ---
 
@@ -94,7 +94,7 @@ Code directory: [/assets/2020-09-02-Binary_Trees/array_based/](https://github.co
 In this implementation, an array is used to represent a pseudo-complete BST as shown below.
 
 <p align="center">
-<img src="/assets/2020-09-02-Binary_Trees/imgs/array-bst.png" width=450>
+<img src="/assets/2020-09-02-Binary_Trees/imgs/array-bst.png" width=500>
 </p>
 
 
@@ -103,7 +103,7 @@ In this implementation, an array is used to represent a pseudo-complete BST as s
 
 ## 3. Implementation: Linked-Node-based BST
 
-Code directory: [/assets/2020-09-02-Binary_Trees/linked_nodes_based/](https://github.com/Yixuan-Lee/yixuan-lee.github.io/tree/master/assets/2020-09-02-Binary_Trees/src/linked_nodes_based)
+Code directory: [/assets/2020-09-02-Binary_Trees/linked_nodes_based/](https://github.com/Yixuan-Lee/yixuan-lee.github.io/tree/master/assets/2020-09-02-Binary_Trees/src/linked_treenodes_based)
 
 In this implementation, each node is split into three parts:
 
@@ -128,5 +128,3 @@ In this implementation, each node is split into three parts:
 2. [Binary Search Tree Attributes](https://www.cnblogs.com/WindSun/p/10859055.html)
 
 3. [Binary Search Tree Wikipedia](https://en.wikipedia.org/wiki/Binary_search_tree)
-
-
