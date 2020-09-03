@@ -24,14 +24,14 @@ Asset directory: [/assets/2020-09-02-Binary_Trees/](https://github.com/Yixuan-Le
 
 ## 1. Binary Search Trees (BST)
 
-Binary Search Tree (BST) is a sorted binary tree where the rule `left node < root < right node` for every node in the tree satisfies.
+Binary Search Tree (BST) is a sorted binary tree where the rule $$left node \le root \le right node$$ for every node in the tree satisfies (assuming node values are all unique in BST). 
 
 ### 1.1 Operations
 
 ### 1.1.1 Principle Operations
 
 1. insert
-2. delete
+2. remove
 3. searchByValue
 4. preOrder
 5. inOrder
@@ -43,12 +43,17 @@ Binary Search Tree (BST) is a sorted binary tree where the rule `left node < roo
 ### 1.1.2 Auxiliary Operations
 
 1. isEmpty
-2. getParent
-3. getLeftChild
-4. getRightChild
-5. getNodesNumber
-6. toString
+2. isBST
+3. getParent
+4. getLeftChild
+5. getRightChild
+6. countNodes
 7. destroyTree
+
+### 1.1.3 Auxiliary Functions
+
+1. isEqual
+2. deepcopy
 
 
 ### 1.2 Attributes
@@ -74,7 +79,33 @@ Attribute 4: For a complete BST containing n nodes, if we numbering nodes consec
 4.6) current node is at the level $$\lceil log_2{index} + 1 \rceil$$
 
 
-### 1.3 Traversal
+### 1.3 Remove Node in BST
+
+When removing a node in BST, it is mandatory to maintain the tree to be still BST-valid after deletion. There are 3 scenarios in this case:
+
+<p align="center">
+<img src="/assets/2020-09-02-Binary_Trees/imgs/bst-remove-case-1.png" alt="BST deletion case 1" width="450" >
+</p>
+
+#### Scenario 1. left node: The node to be deleted has no children.
+
+Simply remove the node from BST and set its parent's corresponding child pointer to nullptr.
+
+#### Scenario 2. (partial) internal node: The node to be deleted has 1 child.
+
+If the child is the left child of the partial internal node, then directly link the left child node to the parent of the removed node.
+
+If the child is the right child of the partial internal node, then directly link the right child node to the parent of the reomved node.
+
+<p align="center">
+<img src="/assets/2020-09-02-Binary_Trees/imgs/bst-remove-case-2.png" alt="BST deletion case 2" width="450" >
+</p>
+
+
+#### Scenario 3. (complete) internal node: The node to be deleted has 2 children.
+
+
+### 1.4 BST Traversal
 
 
 
@@ -89,7 +120,7 @@ Code directory: [/assets/2020-09-02-Binary_Trees/array_based/](https://github.co
 In this implementation, an array is used to represent a pseudo-complete BST as shown below.
 
 <p align="center">
-<img src="/assets/2020-09-02-Binary_Trees/imgs/array-bst.png" width=450>
+<img src="/assets/2020-09-02-Binary_Trees/imgs/array-bst.png" width=500>
 </p>
 
 
@@ -98,7 +129,7 @@ In this implementation, an array is used to represent a pseudo-complete BST as s
 
 ## 3. Implementation: Linked-Node-based BST
 
-Code directory: [/assets/2020-09-02-Binary_Trees/linked_nodes_based/](https://github.com/Yixuan-Lee/yixuan-lee.github.io/tree/master/assets/2020-09-02-Binary_Trees/src/linked_nodes_based)
+Code directory: [/assets/2020-09-02-Binary_Trees/linked_nodes_based/](https://github.com/Yixuan-Lee/yixuan-lee.github.io/tree/master/assets/2020-09-02-Binary_Trees/src/linked_treenodes_based)
 
 In this implementation, each node is split into three parts:
 
@@ -121,3 +152,8 @@ In this implementation, each node is split into three parts:
 1. [Binary Search Tree GIF source](https://blog.penjee.com/5-gifs-to-understand-binary-search-tree/)
 
 2. [Binary Search Tree Attributes](https://www.cnblogs.com/WindSun/p/10859055.html)
+
+3. [Binary Search Tree Wikipedia](https://en.wikipedia.org/wiki/Binary_search_tree)
+
+4. [BST Removal Operation](http://www.algolist.net/Data_structures/Binary_search_tree/Removal)
+
