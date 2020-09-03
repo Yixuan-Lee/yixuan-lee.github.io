@@ -42,9 +42,9 @@ Attribute 4: For a complete BST containing n nodes, if we numbering nodes consec
 
 4.3) if $$2 * index + 1 \leq n$$, the index of its right child is $$2 * index + 1$$
 
-4.4) if $$index \neq 1$$ and $$index % 2 == 1$$, current node is right child of its parent node
+4.4) if $$index \neq 1$$ and $$index \% 2 == 1$$, current node is right child of its parent node
 
-4.5) if $$index \neq 1$$ and $$index % 2 == 0$$, current node is left child of its parent node
+4.5) if $$index \neq 1$$ and $$index \% 2 == 0$$, current node is left child of its parent node
 
 4.6) current node is at the level $$\lceil log_2{index} + 1 \rceil$$
 
