@@ -30,7 +30,7 @@ Binary Search Tree (BST) is a sorted binary tree where the rule `left node < roo
 
 Attribute 1: At level i, the most nodes it can have is $$2^{i-1}$$.
 
-Attribute 2: For a BST, the depth is $$\lceil log_2(n+1) \rceil$$.
+Attribute 2: For a BST, the depth is $$\lceil log_2(n+1) \rceil$$ or equivalently $$\lfloor log_2{n} \rfloor + 1$$.
 
 
 
