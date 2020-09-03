@@ -28,10 +28,20 @@ Binary Search Tree (BST) is a sorted binary tree where the rule `left node < roo
 
 ### 1.1 Attributes
 
-Attribute 1: At level i, the most nodes it can have is $$2^{i-1}$$.
+Attribute 1: At level i ($$i \geq 1$$), the most nodes it can have is $$2^{i-1}$$.
 
-Attribute 2: For a BST, the depth is $$\lceil log_2(n+1) \rceil$$ or equivalently $$\lfloor log_2{n} \rfloor + 1$$.
+Attribute 2: For a BST, the depth is $$\lceil log_2(n+1) \rceil$$ or equivalently $$\lfloor log_2{n} \rfloor + 1$$. (n is the number of nodes in BST)
 
+Attribute 3: At depth k ($$k \geq 0$$), the most nodes it can have is $$2^k - 1$$. (at root node, level i = 1, depth k = 0)
+
+Attribute 4: For a complete BST containing n nodes, if we numbering nodes consecutively from left to right at every level, then it satisfies:
+
+	a) if $$index = 1$$, then root node, otherwise, its parent node index is $$\lfloor \frac{index}{2} \rfloor$$
+    b) if $$2 * index \leq n$$, the index of its left child is $$2 * index$$
+    c) if $$2 * index + 1 \leq n$$, the index of its right child is $$2 * index + 1$$
+    d) if $$index \neq 1$$ and $$index % 2 == 1$$, current node is right child of its parent node
+    e) if $$index \neq 1$$ and $$index % 2 == 0$$, current node is left child of its parent node
+    f) current node is at the level $$\lceil log_2{index} + 1 \rceil$$
 
 
 ### 1.2 Implementation
