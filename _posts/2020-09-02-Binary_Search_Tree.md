@@ -65,8 +65,9 @@ Code directory: [/assets/2020-09-02-Binary_Trees/array_based/](https://github.co
 
 In this implementation, an array is used to represent a pseudo-complete BST as shown below.
 
-<img src="/assets/2020-09-02-Binary_Trees/imgs/array-bst.png" width=300>
-
+<p align="center">
+<img src="/assets/2020-09-02-Binary_Trees/imgs/array-bst.png" width=450>
+</p>
 
 
 
@@ -82,8 +83,9 @@ In this implementation, each node is split into three parts:
 2. data
 3. right child pointer
 
+<p align="center">
 <img src="/assets/2020-09-02-Binary_Trees/imgs/linked-nodes-bst.png" width=300>
-
+</p>
 
 ---
 
