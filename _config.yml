@@ -6,7 +6,7 @@
 name: Yixuan (Will) Lee
 
 # Short bio or description (displayed in the header)
-description: Graduate Student in Computer Science
+description: Lazy Youth Xi (十一懒人) - Blog
 
 # URL of your avatar or profile pic (you could use your GitHub profile pic)
 avatar: https://avatars2.githubusercontent.com/u/42724856?s=460&v=4
@@ -48,6 +48,9 @@ url: http://yixuan-lee.github.io
 # and NOT your User repository (http://yourusername.github.io)
 # then add in the baseurl here, like this: "/repository-name"
 baseurl: ""
+
+# Add a tag page
+tag_page: '/tags/'
 
 #
 # !! You don't need to change any of the configuration flags below !!
