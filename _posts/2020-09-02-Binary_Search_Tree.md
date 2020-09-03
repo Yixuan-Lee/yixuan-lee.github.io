@@ -26,7 +26,32 @@ Asset directory: [/assets/2020-09-02-Binary_Trees/](https://github.com/Yixuan-Le
 
 Binary Search Tree (BST) is a sorted binary tree where the rule `left node < root < right node` for every node in the tree satisfies.
 
-### 1.1 Attributes
+### 1.1 Operations
+
+### 1.1.1 Principle Operations
+
+1. insert
+2. delete
+3. searchByValue
+4. preOrder
+5. inOrder
+6. postOrder
+7. levelOrder
+8. getHeight
+9. getRoot
+
+### 1.1.2 Auxiliary Operations
+
+1. isEmpty
+2. getParent
+3. getLeftChild
+4. getRightChild
+5. getNodesNumber
+6. toString
+7. destroyTree
+
+
+### 1.2 Attributes
 
 Attribute 1: At level i ($$i \geq 1$$), the most nodes it can have is $$2^{i-1}$$.
 
@@ -49,8 +74,6 @@ Attribute 4: For a complete BST containing n nodes, if we numbering nodes consec
 4.6) current node is at the level $$\lceil log_2{index} + 1 \rceil$$
 
 
-### 1.2 Implementation
-
 ### 1.3 Traversal
 
 
@@ -65,8 +88,9 @@ Code directory: [/assets/2020-09-02-Binary_Trees/array_based/](https://github.co
 
 In this implementation, an array is used to represent a pseudo-complete BST as shown below.
 
-<img src="/assets/2020-09-02-Binary_Trees/imgs/array-bst.png" width=300>
-
+<p align="center">
+<img src="/assets/2020-09-02-Binary_Trees/imgs/array-bst.png" width=450>
+</p>
 
 
 
@@ -82,8 +106,9 @@ In this implementation, each node is split into three parts:
 2. data
 3. right child pointer
 
-<img src="/assets/2020-09-02-Binary_Trees/imgs/linked-nodes-bst.png" width=300>
-
+<p align="center">
+<img src="/assets/2020-09-02-Binary_Trees/imgs/linked-nodes-bst.png" width=200>
+</p>
 
 ---
 
