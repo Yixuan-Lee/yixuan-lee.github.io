@@ -63,9 +63,9 @@ public:
 
     TreeNode* remove(TreeNode *root, T value);
 
-    TreeNode& searchByValueRecursive(TreeNode* root, T value);
+    TreeNode* searchByValueRecursive(TreeNode* root, T value);
 
-    TreeNode& searchByValueIterative(TreeNode* root, T value);
+    TreeNode* searchByValueIterative(TreeNode* root, T value);
 
     void preOrder(const TreeNode *root) const;
 
@@ -83,7 +83,7 @@ public:
     ////////////////////// Auxiliary Operations //////////////////////
     bool isEmpty() const;
 
-    bool isBST(const TreeNode &root, T minValue, T maxValue) const;
+    bool isBST(const TreeNode *root, T minValue, T maxValue) const;
 
 //    TreeNode& getParent(const TreeNode &node) const;
 
@@ -95,6 +95,9 @@ public:
 
     void visualizeBST();
 
+    T minValue();
+
+    T maxValue();
     //////////////////////////////////////////////////////////////////
 
 
@@ -222,6 +225,7 @@ LinkedTreeNodesBST<T>& LinkedTreeNodesBST<T>::operator=(LinkedTreeNodesBST &&llb
 template<typename T>
 typename LinkedTreeNodesBST<T>::TreeNode* LinkedTreeNodesBST<T>::insertRecursive(TreeNode *root, int id, T value) {
     if (root == nullptr) {
+        count++;
         return new TreeNode(value, id);
     } else if (root->data == value) {
         // we assume all values in BST are unique
@@ -284,10 +288,10 @@ typename LinkedTreeNodesBST<T>::TreeNode* LinkedTreeNodesBST<T>::remove(LinkedTr
     }
     if (value < root->data) {
         // value should be in the root's left subtree
-        remove(root->leftChild, value);
+        root->leftChild = remove(root->leftChild, value);
     } else if (value > root->data) {
         // value should be in the root's right subtree
-        remove(root->rightChild, value);
+        root->rightChild = remove(root->rightChild, value);
     } else {
         // the node to be removed is found
 
@@ -295,33 +299,40 @@ typename LinkedTreeNodesBST<T>::TreeNode* LinkedTreeNodesBST<T>::remove(LinkedTr
             // scenario 1: leaf node, the node has no children
             delete root;    // wipe out the memory
             root = nullptr;
+            count--;
         } else if (root->leftChild != nullptr && root->rightChild == nullptr) {
             // scenario 2.1: partial internal node with a left child
             TreeNode* temp = root;
             root = root->leftChild; // make the current pointer point to the left child
             delete temp;    // wipe out the memory
+            count--;
         } else if (root->leftChild == nullptr && root->rightChild != nullptr) {
             // scenario 2.2: partial internal node with a right child
             TreeNode *temp = root;
             root = root->rightChild;
             delete temp;
+            count--;
         } else {
-            // scenario 3: complate internal node with two children
+            // scenario 3: complete internal node with two children
             // step 1: find the minimum node in the right subtree
             TreeNode* minimum = findMinimumNode(root->rightChild);
-            // step 2: replace the value of current node with the minimum value
-            root->data = minimum->data;
-            // step 3: remove the minimum node
-            root->rightChild = remove(root->rightChild, minimum->data);
+            if (minimum != nullptr) {
+                // step 2: replace the value of current node with the minimum value
+                root->data = minimum->data;
+                // step 3: remove the minimum node
+                root->rightChild = remove(root->rightChild, minimum->data);
+            }
         }
-        count--;
     }
     return root;
 }
 
 // search TreeNode by value (recursive approach)
 template<typename T>
-typename LinkedTreeNodesBST<T>::TreeNode& LinkedTreeNodesBST<T>::searchByValueRecursive(TreeNode* root, T value) {
+typename LinkedTreeNodesBST<T>::TreeNode* LinkedTreeNodesBST<T>::searchByValueRecursive(TreeNode* root, T value) {
+    if (root == nullptr) {
+        return nullptr;
+    }
     if (root->data == value) {
         return root;
     } else if (root->data > value) {
@@ -335,7 +346,7 @@ typename LinkedTreeNodesBST<T>::TreeNode& LinkedTreeNodesBST<T>::searchByValueRe
 
 // search TreeNode by value (iterative approach)
 template<typename T>
-typename LinkedTreeNodesBST<T>::TreeNode& LinkedTreeNodesBST<T>::searchByValueIterative(TreeNode* root, T value) {
+typename LinkedTreeNodesBST<T>::TreeNode* LinkedTreeNodesBST<T>::searchByValueIterative(TreeNode* root, T value) {
     // keep reference to the current root
     TreeNode* curr = root;
     // traverse root's appropriate subtree
@@ -453,20 +464,48 @@ bool LinkedTreeNodesBST<T>::isEmpty() const {
 }
 
 template<typename T>
-bool LinkedTreeNodesBST<T>::isBST(const LinkedTreeNodesBST<T>::TreeNode &root, T minValue, T maxValue) const {
+bool LinkedTreeNodesBST<T>::isBST(const LinkedTreeNodesBST<T>::TreeNode *root, T minValue, T maxValue) const {
     if (root == nullptr) {
         return true;
     }
-    if (root.data < minValue || root.data > maxValue) {
+    if (root->data < minValue || root->data > maxValue) {
         return false;
     }
-    return isBST(root.leftChild, minValue, root.data - 1)
-        && isBST(root.rightChild, root.data + 1, maxValue);
+    return isBST(root->leftChild, minValue, root->data - 1)
+        && isBST(root->rightChild, root->data + 1, maxValue);
 }
 
 template<typename T>
 size_t LinkedTreeNodesBST<T>::countNodes() const {
     return count;
+}
+
+// iterative approach or recursive approach can both be applied
+// here iterative approach is used
+template<typename T>
+T LinkedTreeNodesBST<T>::minValue() {
+    if (isEmpty()) {
+        throw std::runtime_error("BST is empty.");
+    }
+    TreeNode *curr = root;
+    while (curr->leftChild != nullptr) {
+        curr = curr->leftChild;
+    }
+    return curr->data;
+}
+
+// iterative approach or recursive approach can both be applied
+// here iterative approach is used
+template<typename T>
+T LinkedTreeNodesBST<T>::maxValue() {
+    if (isEmpty()) {
+        throw std::runtime_error("BST is empty.");
+    }
+    TreeNode *curr = root;
+    while (curr->rightChild != nullptr) {
+        curr = curr->rightChild;
+    }
+    return curr->data;
 }
 
 /////////////////////// Auxiliary Functions ////////////////////////
@@ -479,7 +518,9 @@ bool LinkedTreeNodesBST<T>::isEqual(const LinkedTreeNodesBST<T>::TreeNode *root1
     if (root1 != nullptr && root2 != nullptr
         && isEqual(root1->leftChild, root2->leftChild)
         && isEqual(root1->rightChild, root2->rightChild)) {
-        return true;
+        // so far, the structures of root1 and root2 are same
+        // next, check the node values
+        return root1->data == root2->data;
     }
     return false;
 }
@@ -523,9 +564,9 @@ void LinkedTreeNodesBST<T>::destroyTree(TreeNode *root) {
 }
 
 template<typename T>
-typename LinkedTreeNodesBST<T>::TreeNode * LinkedTreeNodesBST<T>::findMinimumNode(LinkedTreeNodesBST<T>::TreeNode *root) {
+typename LinkedTreeNodesBST<T>::TreeNode* LinkedTreeNodesBST<T>::findMinimumNode(LinkedTreeNodesBST<T>::TreeNode *root) {
     if (root == nullptr) {
-        return INT_MAX;
+        return nullptr;
     }
     if (root->leftChild != nullptr) {
         // the most left node is the minimum node
