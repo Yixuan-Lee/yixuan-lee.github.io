@@ -171,4 +171,10 @@ In this implementation, each node is split into three parts:
 
 6. [BST Insertion Operation](https://www.techiedelight.com/insertion-in-bst/)
 
+7. [BST Level Order Traversal](https://www.techiedelight.com/level-order-traversal-binary-tree/)
+
+8. [Calculate the height of BST](https://www.geeksforgeeks.org/write-a-c-program-to-find-the-maximum-depth-or-height-of-a-tree/)
+
+9. [Draw a binary tree on console in C++](https://stackoverflow.com/questions/21128276/c-drawing-binary-tree-in-console-problems)
+
 
