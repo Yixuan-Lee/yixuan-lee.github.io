@@ -83,12 +83,12 @@ Attribute 4: For a complete BST containing n nodes, if we numbering nodes consec
 
 When removing a node in BST, it is mandatory to maintain the tree to be still BST-valid after deletion. There are 3 scenarios in this case:
 
-#### Scenario 1. left node: The node to be deleted has no children.
+#### Scenario 1. leaf node: The node to be deleted has no children.
 
 Simply remove the node from BST and set its parent's corresponding child pointer to nullptr.
 
 <p align="center">
-<img src="/assets/2020-09-02-Binary_Trees/imgs/bst-remove-case-1.png" alt="BST deletion case 1" width="350" >
+<img src="/assets/2020-09-02-Binary_Trees/imgs/bst-remove-case-1.png" alt="BST deletion case 1" width="250" >
 </p>
 
 #### Scenario 2. (partial) internal node: The node to be deleted has 1 child.
@@ -111,7 +111,7 @@ Step 2: replace the value of the node to be removed with the minimum value
 Step 3: remove the node with minimum value at the right subtree
 
 <p align="center">
-<img src="/assets/2020-09-02-Binary_Trees/imgs/bst-remove-case-3.png" alt="BST deletion case 3" width="700" >
+<img src="/assets/2020-09-02-Binary_Trees/imgs/bst-remove-case-3.png" alt="BST deletion case 3" width="800" >
 </p>
 
 
@@ -167,6 +167,8 @@ In this implementation, each node is split into three parts:
 
 4. [BST Removal Operation](http://www.algolist.net/Data_structures/Binary_search_tree/Removal)
 
-5. [BST Insertion Operation](https://www.techiedelight.com/insertion-in-bst/)
+5. [BST Removal Operation 2](https://helloacm.com/how-to-delete-a-node-from-a-binary-search-tree/)
 
-6. 
+6. [BST Insertion Operation](https://www.techiedelight.com/insertion-in-bst/)
+
+
