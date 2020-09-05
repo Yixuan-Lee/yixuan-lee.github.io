@@ -117,8 +117,8 @@ ArrayBST<T, initValue, SIZE>::ArrayBST(T rootValue) {
     capacity = SIZE;
     initVal = initValue;
     // fill bst with initVal values
-    bst = new T[SIZE];
-    std::fill_n(bst, capacity, initValue);
+    bst = new T[SIZE + 1];
+    std::fill_n(bst, capacity + 1, initValue);
     // set root value
     bst[rootId] = rootValue;
 }
@@ -129,20 +129,19 @@ bool ArrayBST<T, initValue, SIZE>::operator==(const ArrayBST &abst) {
     if (count != abst.count) {
         return false;
     }
-    for (int i = 0; i < std::min(capacity, abst.capacity); ++i) {
-        if (bst[i] != initVal && abst.bst[i] != abst.initVal
-            && bst[i] != abst.bst[i]) {
+    for (int i = 1; i <= std::min(capacity, abst.capacity); ++i) {
+        if (bst[i] != initVal && abst.bst[i] != abst.initVal && bst[i] != abst.bst[i]) {
             return false;
         }
     }
     // check if one of the trees has more un-null nodes
     // if all actual nodes have the same data, then consider two BSTs are same
     // although one may has bigger capacity
-    for (int i = std::min(capacity, abst.capacity); i < std::max(capacity, abst.capacity); ++i) {
-        if (i < capacity && bst[i] != initVal) {
+    for (int i = std::min(capacity, abst.capacity) + 1; i <= std::max(capacity, abst.capacity); ++i) {
+        if (i <= capacity && bst[i] != initVal) {
             return false;
         }
-        if (i < abst.capacity && abst.bst[i] != abst.initVal) {
+        if (i <= abst.capacity && abst.bst[i] != abst.initVal) {
             return false;
         }
     }
@@ -164,9 +163,9 @@ ArrayBST<T, initValue, SIZE>::ArrayBST(const ArrayBST &abst) {
         destroyTree();
     }
     // allocation
-    bst = new T[abst.capacity];
+    bst = new T[abst.capacity + 1];
     // copy element-wisely
-    for (int i = 0; i < abst.capacity; ++i) {
+    for (int i = 0; i <= abst.capacity; ++i) {
         // shallow copy or deep copy depends on the implementation of operator= overload in T
         bst[i] = abst[i];
     }
@@ -186,9 +185,9 @@ ArrayBST<T, initValue, SIZE>& ArrayBST<T, initValue, SIZE>::operator=(const Arra
         destroyTree();
     }
     // allocation
-    bst = new T[abst.capacity];
+    bst = new T[abst.capacity + 1];
     // copy element-wisely
-    for (int i = 0; i < abst.capacity; ++i) {
+    for (int i = 0; i <= abst.capacity; ++i) {
         // shallow copy or deep copy depends on the implementation of operator= overload in T
         bst[i] = abst[i];
     }
@@ -259,7 +258,7 @@ void ArrayBST<T, initValue, SIZE>::insert(T value) {
             // value should be inserted in the right subtree
             currId = currId * 2 + 1;
         }
-        if (currId >= capacity) {
+        if (currId > capacity) {
             // double the capacity
             doublesize();
         }
@@ -288,8 +287,9 @@ T ArrayBST<T, initValue, SIZE>::remove(size_t index, T value) {
         }
     }
     // so far, we should either find the appropriate index or bst[curr] = initValue or curr > capacity
+
     if (curr > capacity || bst[curr] == initValue) {
-        // if node with value is not found
+        // if node with the value is not found
         throw std::runtime_error("value is not found in BST.");
     } else {
         T ret = -1;
@@ -354,7 +354,7 @@ T ArrayBST<T, initValue, SIZE>::searchByValue(T value) {
     // keep reference to current index
     size_t curr = rootId;
     // traverse root's appropriate subtree
-    while (curr < capacity && bst[curr] != initValue) {
+    while (curr <= capacity && bst[curr] != initValue) {
         if (bst[curr] == value) {
             return bst[curr];
         } else if (bst[curr] > value) {
@@ -371,7 +371,7 @@ T ArrayBST<T, initValue, SIZE>::searchByValue(T value) {
 // four types of tree traversal: preOrder, inOrder, postOrder, levelOrder
 template<typename T, T initValue, size_t SIZE>
 void ArrayBST<T, initValue, SIZE>::preOrder(size_t index) {
-    if (index >= capacity || bst[index] == initValue) {
+    if (index > capacity || bst[index] == initValue) {
         return;
     }
 
@@ -387,7 +387,7 @@ void ArrayBST<T, initValue, SIZE>::preOrder(size_t index) {
 
 template<typename T, T initValue, size_t SIZE>
 void ArrayBST<T, initValue, SIZE>::inOrder(size_t index) {
-    if (index >= capacity || bst[index] == initValue) {
+    if (index > capacity || bst[index] == initValue) {
         return;
     }
 
@@ -403,7 +403,7 @@ void ArrayBST<T, initValue, SIZE>::inOrder(size_t index) {
 
 template<typename T, T initValue, size_t SIZE>
 void ArrayBST<T, initValue, SIZE>::postOrder(size_t index) {
-    if (index >= capacity || bst[index] == initValue) {
+    if (index > capacity || bst[index] == initValue) {
         return;
     }
 
@@ -437,7 +437,7 @@ int ArrayBST<T, initValue, SIZE>::getHeight() {
     }
     // find the maximum index with non-initValue
     int maximumIndex = 1;
-    for (int i = static_cast<int>(capacity) - 1; i >= 0; --i) {
+    for (int i = static_cast<int>(capacity); i >= 1; --i) {
         if (bst[i] != initValue)  {
             maximumIndex = i;
             break;
@@ -499,7 +499,7 @@ void ArrayBST<T, initValue, SIZE>::visualizeBST() {
         }
 
         void print(size_t index, int level) {
-            if (index >= tree.capacity || tree.bst[index] == initValue) {
+            if (index > tree.capacity || tree.bst[index] == initValue) {
                 // only print when node only has 1 child
                 cout << "[null]" << endl;
             } else {
@@ -530,7 +530,7 @@ T ArrayBST<T, initValue, SIZE>::minValue() {
         throw std::runtime_error("BST is empty.");
     }
     size_t curr = rootId;
-    while (curr * 2 < capacity && bst[curr * 2] != initValue) {
+    while (curr * 2 <= capacity && bst[curr * 2] != initValue) {
         // go to left child
         curr = curr * 2;
     }
@@ -543,7 +543,7 @@ T ArrayBST<T, initValue, SIZE>::maxValue() {
         throw std::runtime_error("BST is empty.");
     }
     size_t curr = rootId;
-    while (curr * 2 + 1 < capacity && bst[curr * 2 + 1] != initValue) {
+    while (curr * 2 + 1 <= capacity && bst[curr * 2 + 1] != initValue) {
         // go to right child
         curr = curr * 2 + 1;
     }
@@ -599,7 +599,7 @@ void ArrayBST<T, initValue, SIZE>::reorganizeSubtree(size_t subtreeRootIndex, si
         reorganizeSubtree(leftChildIndex, subtreeRootIndexMoveTo * 2);
     }
     // update right subtree
-    if (rightChildIndex < capacity && bst[rightChildIndex] != initVal) {
+    if (rightChildIndex <= capacity && bst[rightChildIndex] != initVal) {
         bst[subtreeRootIndexMoveTo * 2 + 1] = bst[rightChildIndex];
         // set current to initValue
         bst[rightChildIndex] = initValue;
