@@ -6,7 +6,7 @@ date: 2020-09-02T00:00:00.000Z
 tags: data-structures
 ---
 
-This post is going to discuss Binary Search Tree (BST) and present two implementation on BST in C++14, Array-Based and Linked-Node-Based.
+This post is going to discuss Binary Search Tree (BST) and present two implementations on BST in C++14, Array-Based and Linked-Node-Based.
 <p align="center">
 <img src="/assets/2020-09-02-Binary_Trees/gifs/binary-search-tree.gif" alt="Binary Search Tree animation" width="450" >
 </p>
@@ -24,7 +24,7 @@ Asset directory: [/assets/2020-09-02-Binary_Trees/](https://github.com/Yixuan-Le
 
 ## 1. Binary Search Trees (BST)
 
-Binary Search Tree (BST) is a sorted binary tree where the rule $$left node \le root \le right node$$ for every node in the tree satisfies (assuming node values are all unique in BST). 
+Binary Search Tree (BST) is a sorted binary tree where the rule $$left node < root < right node$$ for every node in the tree satisfies (assuming node values are all unique in BST). 
 
 ### 1.1 Operations
 
@@ -38,7 +38,7 @@ Binary Search Tree (BST) is a sorted binary tree where the rule $$left node \le 
 6. postOrder
 7. levelOrder
 8. getHeight
-9. getRoot
+9. getRootNode / getRootValue
 
 ### 1.1.2 Auxiliary Operations
 
@@ -222,4 +222,4 @@ In this implementation, each node is split into three parts:
 
 11. [BST Array Implementation remove operation](http://datastructuresinterview.blogspot.com/2012/12/delete-node-in-bst-using-arrays.html)
 
-12 
+12
