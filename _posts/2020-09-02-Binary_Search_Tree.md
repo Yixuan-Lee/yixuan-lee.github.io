@@ -235,7 +235,7 @@ For getHeight function, there also are two ways (recursive and calculate by form
 
 As BST inserts and remove nodes, it is very easy for the BST to be unbalanced, resulting high time complexity on searching, inserting and remove. I found AVL Tree is self-balancing BST where the difference between heights of left and right subtrees cannot be more than one for all nodes. 
 
-Next, I will implement the self-balancing feature on the current BST in another post.
+Next, I will implement the self-balancing feature on the current BST in another blog.
 
 ---
 
