@@ -85,7 +85,7 @@ int main() {
     cout << endl;
     cout << "levelOrder : ";
     ltnb_3.levelOrder(ltnb_3.getRoot());
-    cout << "=============================================================\n";
+    cout << "\n=============================================================\n";
 
     // test searchByValueRecursive, searchByValueIterative
     auto searchRes1 = ltnb_3.searchByValueRecursive(ltnb_3.getRoot(), 9);
