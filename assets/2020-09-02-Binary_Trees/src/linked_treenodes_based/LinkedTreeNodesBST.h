@@ -175,7 +175,7 @@ LinkedTreeNodesBST<T>& LinkedTreeNodesBST<T>::operator=(const LinkedTreeNodesBST
         // destroy the current BST
         destroyTree(root);
     }
-    // copy the root node
+    // copy the root node and count
     root = TreeNode(llb.root->data);
     count = llb.count;
     // deepcopy llb's left and right subtrees
@@ -198,6 +198,7 @@ LinkedTreeNodesBST<T>::LinkedTreeNodesBST(LinkedTreeNodesBST &&llb) noexcept {
     // reset llb to stable states
     llb.root = nullptr;
 }
+
 // 5. move assignment operator=
 template<typename T>
 LinkedTreeNodesBST<T>& LinkedTreeNodesBST<T>::operator=(LinkedTreeNodesBST &&llb) noexcept {
@@ -288,9 +289,11 @@ typename LinkedTreeNodesBST<T>::TreeNode* LinkedTreeNodesBST<T>::remove(LinkedTr
     }
     if (value < root->data) {
         // value should be in the root's left subtree
+        // update leftChild pointer as the returned TreeNode
         root->leftChild = remove(root->leftChild, value);
     } else if (value > root->data) {
         // value should be in the root's right subtree
+        // update rightChild pointer as the returned TreeNode
         root->rightChild = remove(root->rightChild, value);
     } else {
         // the node to be removed is found
@@ -305,12 +308,14 @@ typename LinkedTreeNodesBST<T>::TreeNode* LinkedTreeNodesBST<T>::remove(LinkedTr
             TreeNode* temp = root;
             root = root->leftChild; // make the current pointer point to the left child
             delete temp;    // wipe out the memory
+            temp = nullptr;
             count--;
         } else if (root->leftChild == nullptr && root->rightChild != nullptr) {
             // scenario 2.2: partial internal node with a right child
             TreeNode *temp = root;
             root = root->rightChild;
             delete temp;
+            temp = nullptr;
             count--;
         } else {
             // scenario 3: complete internal node with two children
@@ -321,6 +326,9 @@ typename LinkedTreeNodesBST<T>::TreeNode* LinkedTreeNodesBST<T>::remove(LinkedTr
                 root->data = minimum->data;
                 // step 3: remove the minimum node
                 root->rightChild = remove(root->rightChild, minimum->data);
+            } else {
+                // program won't go to here, since scenario 3 illustrates root is a complate internal node
+                // so root->rightChild is not empty, there has to be a non-nullptr TreeNode* returned.
             }
         }
     }
@@ -354,8 +362,10 @@ typename LinkedTreeNodesBST<T>::TreeNode* LinkedTreeNodesBST<T>::searchByValueIt
         if (curr->data == value) {
             return curr;
         } else if (curr->data > value) {
+            // go to left subtree
             curr = curr->leftChild;
         } else {
+            // go to right subtree
             curr = curr->rightChild;
         }
     }
