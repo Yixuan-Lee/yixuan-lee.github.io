@@ -2,7 +2,7 @@
 layout: post
 title: BST Implementation
 published: true
-date: 2020-09-02T00:00:00.000Z
+date: {}
 tags: data-structures
 ---
 
@@ -54,9 +54,11 @@ Binary Search Tree (BST) is a sorted binary tree where the rule $$left node < ro
 1. isEqual
 2. deepcopy
 3. destroyTree
-4. findMinimumNode
+4. findMinimumNode / findMinimumIndex
 5. printLevel
 6. calcHeight
+7. doublesize
+8. reorganizeSubtree
 
 
 ### 1.2 Attributes
@@ -81,6 +83,10 @@ Binary Search Tree (BST) is a sorted binary tree where the rule $$left node < ro
 
 4.6) current node is at the level $$\lceil log_2{index} + 1 \rceil$$
 
+**Attribute 5:** If we know the largest TreeNode id or index with non-initial value, we can calculate the height of BST by the formula:
+
+$$ BST Height = \lfloor log_{2}{largest index} \rfloor + 1$$
+
 
 ### 1.3 Remove Node in BST
 
@@ -88,7 +94,13 @@ When removing a node in BST, it is mandatory to maintain the tree to be still BS
 
 #### Scenario 1. leaf node: The node to be deleted has no children.
 
+*Linked TreeNodes Implementation:*
+
 Simply remove the node from BST and set its parent's corresponding child pointer to nullptr.
+
+*Array Implementation:*
+
+Simply set the node index to initValue.
 
 <p align="center">
 <img src="/assets/2020-09-02-Binary_Trees/imgs/bst-remove-case-1.png" alt="BST deletion case 1" width="250" >
@@ -96,9 +108,25 @@ Simply remove the node from BST and set its parent's corresponding child pointer
 
 #### Scenario 2. (partial) internal node: The node to be deleted has 1 child.
 
-If the child is the left child of the partial internal node, then directly link the left child node to the parent of the removed node.
+##### scenario 2.1: partial internal node has a left child
 
-If the child is the right child of the partial internal node, then directly link the right child node to the parent of the reomved node.
+*Linked TreeNodes Implementation:*
+
+Directly link the left child node to the parent of the removed node, then delete the node.
+
+*Array Implementation:*
+
+Replace the value at removed node index with its left child value, then re-organize its left subtree.
+
+##### scenario 2.2: partial internal node has a right child
+
+*Linked TreeNodes Implementation:*
+
+Directly link the right child node to the parent of the reomved node, then delete the node.
+
+*Array Implementation:*
+
+Replace the value at removed node index with its right child value, then re-organize its right subtree.
 
 <p align="center">
 <img src="/assets/2020-09-02-Binary_Trees/imgs/bst-remove-case-2.png" alt="BST deletion case 2" width="550" >
@@ -112,6 +140,8 @@ If the child is the right child of the partial internal node, then directly link
 **Step 2:** replace the value of the node to be removed with the minimum value
 
 **Step 3:** remove the node with minimum value at the right subtree
+
+**(Step 4:)** for array implementation, it also needs re-organization at the index with minimum value at the right subtree.
 
 <p align="center">
 <img src="/assets/2020-09-02-Binary_Trees/imgs/bst-remove-case-3.png" alt="BST deletion case 3" width="800" >
@@ -159,8 +189,6 @@ visit nodes level by level from root to leaf nodes.
 <img src="/assets/2020-09-02-Binary_Trees/imgs/levelorder.png" alt="Level-order traversal" width="400" >
 </p>
 
-*GIF source: Reference 10*
-
 ---
 
 ## 2. Implementation: Array-based BST
@@ -173,8 +201,13 @@ In this implementation, an array is used to represent a pseudo-complete BST as s
 <img src="/assets/2020-09-02-Binary_Trees/imgs/array-bst.png" width=500>
 </p>
 
-*References: 11, *
+While instantiating an object of *ArrayBST*, we need to provide 
 
+* the generic type *T* : indicate what type we want the BST to represent.
+* the initial value : indicate what the initial value at each index in the array.
+* the size : indicate the size of array we will initialize.
+
+When inserting a value, if the appropriate index at which the value is going to insert exceeds the current array capacity, expansion on array and element-wise copy steps are performed automatically before the insertion.
 
 ---
 
@@ -192,9 +225,17 @@ In this implementation, each node is split into three parts:
 <img src="/assets/2020-09-02-Binary_Trees/imgs/linked-nodes-bst.png" width=200>
 </p>
 
+For insertion and search operations, there are two approaches, recursive & iterative, which have been implemented.
+
+For getHeight function, there also are two ways (recursive and calculate by formula above) to implement it. In the implementation, the recursive approach is used.
+
 ---
 
 ## Further Learning
+
+As BST inserts and remove nodes, it is very easy for the BST to be unbalanced, resulting high time complexity on searching, inserting and remove. I found AVL Tree is self-balancing BST where the difference between heights of left and right subtrees cannot be more than one for all nodes. 
+
+Next, I will implement the self-balancing feature on the current BST in another post.
 
 ---
 
@@ -222,4 +263,6 @@ In this implementation, each node is split into three parts:
 
 11. [BST Array Implementation remove operation](http://datastructuresinterview.blogspot.com/2012/12/delete-node-in-bst-using-arrays.html)
 
-12
+12. [BST Removal explanation in Java](http://www.java2novice.com/java-interview-programs/delete-node-binary-search-tree-bst/)
+
+
