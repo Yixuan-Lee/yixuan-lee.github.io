@@ -173,6 +173,7 @@ In this implementation, an array is used to represent a pseudo-complete BST as s
 <img src="/assets/2020-09-02-Binary_Trees/imgs/array-bst.png" width=500>
 </p>
 
+*References: 11, *
 
 
 ---
@@ -219,4 +220,6 @@ In this implementation, each node is split into three parts:
 
 10. [Tree traversal GIF source](https://blog.csdn.net/weixin_45525272/article/details/105837185)
 
+11. [BST Array Implementation remove operation](http://datastructuresinterview.blogspot.com/2012/12/delete-node-in-bst-using-arrays.html)
 
+12 
