@@ -30,9 +30,9 @@ Binary Search Tree (BST) is a sorted binary tree where the rule $$left node \le 
 
 ### 1.1.1 Principle Operations
 
-1. insert
+1. insert (recursive / iterative)
 2. remove
-3. searchByValue
+3. searchByValue (recursive / iterative)
 4. preOrder
 5. inOrder
 6. postOrder
@@ -44,27 +44,30 @@ Binary Search Tree (BST) is a sorted binary tree where the rule $$left node \le 
 
 1. isEmpty
 2. isBST
-3. getParent
-4. getLeftChild
-5. getRightChild
-6. countNodes
-7. destroyTree
+3. countNodes
+4. visualizeBST
+5. minValue
+6. maxValue
 
 ### 1.1.3 Auxiliary Functions
 
 1. isEqual
 2. deepcopy
+3. destroyTree
+4. findMinimumNode
+5. printLevel
+6. calcHeight
 
 
 ### 1.2 Attributes
 
-Attribute 1: At level i ($$i \geq 1$$), the most nodes it can have is $$2^{i-1}$$.
+**Attribute 1:** At level i ($$i \geq 1$$), the most nodes it can have is $$2^{i-1}$$.
 
-Attribute 2: For a BST, the depth is $$\lceil log_2(n+1) \rceil$$ or equivalently $$\lfloor log_2{n} \rfloor + 1$$. (n is the number of nodes in BST)
+**Attribute 2:** For a BST, the depth is $$\lceil log_2(n+1) \rceil$$ or equivalently $$\lfloor log_2{n} \rfloor + 1$$. (n is the number of nodes in BST)
 
-Attribute 3: At depth k ($$k \geq 0$$), the most nodes it can have is $$2^k - 1$$. (at root node, level i = 1, depth k = 0)
+**Attribute 3:** At depth k ($$k \geq 0$$), the most nodes it can have is $$2^k - 1$$. (at root node, level i = 1, depth k = 0)
 
-Attribute 4: For a complete BST containing n nodes, if we numbering nodes consecutively from left to right at every level, then it satisfies:
+**Attribute 4:** For a complete BST containing n nodes, if we numbering nodes consecutively from left to right at every level, then it satisfies:
 
 4.1) if $$index = 1$$, then root node, otherwise, its parent node index is $$\lfloor \frac{index}{2} \rfloor$$
 
@@ -104,11 +107,11 @@ If the child is the right child of the partial internal node, then directly link
 
 #### Scenario 3. (complete) internal node: The node to be deleted has 2 children.
 
-Step 1: find the node with minimum value at the right subtree of the removed node.
+**Step 1:** find the node with minimum value at the right subtree of the removed node.
 
-Step 2: replace the value of the node to be removed with the minimum value
+**Step 2:** replace the value of the node to be removed with the minimum value
 
-Step 3: remove the node with minimum value at the right subtree
+**Step 3:** remove the node with minimum value at the right subtree
 
 <p align="center">
 <img src="/assets/2020-09-02-Binary_Trees/imgs/bst-remove-case-3.png" alt="BST deletion case 3" width="800" >
@@ -117,9 +120,46 @@ Step 3: remove the node with minimum value at the right subtree
 
 ### 1.4 BST Traversal
 
+#### 1.4.1 pre-order traversal
+
+visit current node -> visit left subtree -> visit right subtree.
+
+<p align="center">
+<img src="/assets/2020-09-02-Binary_Trees/gifs/preorder.gif" alt="Pre-order traversal" width="400" >
+</p>
 
 
+*GIF source: Reference 10*
 
+#### 1.4.2 in-order traversal
+
+visit left subtree -> visit current node -> visit right subtree.
+
+<p align="center">
+<img src="/assets/2020-09-02-Binary_Trees/gifs/inorder.gif" alt="In-order traversal" width="400" >
+</p>
+
+*GIF source: Reference 10*
+
+#### 1.4.3 post-order traversal
+
+visit left subtree -> visit right subtree -> visit current node.
+
+<p align="center">
+<img src="/assets/2020-09-02-Binary_Trees/gifs/postorder.gif" alt="Post-order traversal" width="400" >
+</p>
+
+*GIF source: Reference 10*
+
+#### 1.4.4 level-order traversal
+
+visit nodes level by level from root to leaf nodes.
+
+<p align="center">
+<img src="/assets/2020-09-02-Binary_Trees/imgs/levelorder.png" alt="Level-order traversal" width="400" >
+</p>
+
+*GIF source: Reference 10*
 
 ---
 
@@ -176,5 +216,7 @@ In this implementation, each node is split into three parts:
 8. [Calculate the height of BST](https://www.geeksforgeeks.org/write-a-c-program-to-find-the-maximum-depth-or-height-of-a-tree/)
 
 9. [Draw a binary tree on console in C++](https://stackoverflow.com/questions/21128276/c-drawing-binary-tree-in-console-problems)
+
+10. [Tree traversal GIF source](https://blog.csdn.net/weixin_45525272/article/details/105837185)
 
 
