@@ -1,9 +1,11 @@
 #include <iostream>
 #include <assert.h>
+#include <stdexcept>
 #include "ArrayBST.h"
 
 using std::cout;
 using std::endl;
+using std::runtime_error;
 
 const int rootIndex = 1;
 
@@ -86,53 +88,114 @@ int main() {
     abst_3.insert(4);
     abst_3.insert(2);
     abst_3.insert(6);
+    abst_3.insert(1);
     abst_3.insert(5);
     abst_3.insert(24);
+    abst_3.insert(32);
     abst_3.insert(28);
-    abst_3.insert(26);
     abst_3.insert(30);
-    abst_3.insert(27);
     abst_3.insert(29);
     abst_3.insert(31);
+    abst_3.insert(36);
+    abst_3.insert(33);
+    abst_3.insert(34);
+    abst_3.insert(39);
+    abst_3.insert(38);
+    abst_3.insert(40);
     // scenario 1: remove a leaf node
-    cout << "Before removing value 5:" << endl;
-    assert(abst_3.countNodes() == 13);
+    cout << "Before removing value 1:" << endl;
+    assert(abst_3.countNodes() == 19);
     abst_3.visualizeBST();
-    abst_3.remove(rootIndex, 5);
-    cout << "After removing value 5:" << endl;
+    try {
+        abst_3.remove(rootIndex, 1);
+    } catch (const runtime_error &e) {
+        cout << e.what() << endl;
+    }
+    cout << "After removing value 1:" << endl;
     abst_3.visualizeBST();
-    assert(abst_3.countNodes() == 12);
+    assert(abst_3.countNodes() == 18);
     cout << "=============================================================\n";
 
     // scenario 2: remove a partial internal node with a left child
     cout << "Before removing value 8:" << endl;
-    assert(abst_3.countNodes() == 12);
+    assert(abst_3.countNodes() == 18);
     abst_3.visualizeBST();
-    abst_3.remove(rootIndex, 8);
+    try {
+        abst_3.remove(rootIndex, 8);
+    } catch (const runtime_error &e) {
+        cout << e.what() << endl;
+    }
     cout << "After removing value 8:" << endl;
     abst_3.visualizeBST();
-    assert(abst_3.countNodes() == 11);
+    assert(abst_3.countNodes() == 17);
     cout << "=============================================================\n";
 
     // scenario 2: remove a partial internal node with a right child
     cout << "Before removing value 24:" << endl;
-    assert(abst_3.countNodes() == 11);
+    assert(abst_3.countNodes() == 17);
     abst_3.visualizeBST();
-    abst_3.remove(rootIndex, 24);   // TODO: buggy
+    abst_3.remove(rootIndex, 24);
     cout << "After removing value 24:" << endl;
     abst_3.visualizeBST();
-    assert(abst_3.countNodes() == 10);
+    assert(abst_3.countNodes() == 16);
     cout << "=============================================================\n";
 
     // scenario 3: remove a complete internal node with two children
-//    cout << "Before removing value 16:" << endl;
-//    assert(abst_3.countNodes() == 10);
-//    abst_3.visualizeBST();
-//    abst_3.remove(rootIndex, 16);
-//    cout << "After removing value 16:" << endl;
-//    abst_3.visualizeBST();
-//    assert(abst_3.countNodes() == 9);
-//    cout << "=============================================================\n";
+    cout << "Before removing value 16:" << endl;
+    assert(abst_3.countNodes() == 16);
+    abst_3.visualizeBST();
+    abst_3.remove(rootIndex, 16);
+    cout << "After removing value 16:" << endl;
+    abst_3.visualizeBST();
+    assert(abst_3.countNodes() == 15);
+    cout << "=============================================================\n";
+
+    // test operator== overload
+    ArrayBST<int, 0, 1> abst_4(5);
+    abst_4.insert(4);
+    abst_4.insert(3);
+    abst_4.insert(2);
+    abst_4.insert(7);
+    abst_4.insert(6);
+    abst_4.insert(8);
+    ArrayBST<int, 0, 1> abst_5(5);
+    abst_5.insert(4);
+    abst_5.insert(3);
+    abst_5.insert(2);
+    abst_5.insert(7);
+    abst_5.insert(6);
+    abst_5.insert(8);
+    ArrayBST<int, 0, 1> abst_6(5);
+    abst_6.insert(4);
+    abst_6.insert(3);
+    abst_6.insert(2);
+    abst_6.insert(7);
+    abst_6.insert(6);
+    abst_6.insert(9);
+    assert((abst_4 == abst_5) == true);
+    assert((abst_4 == abst_6) == false);
+
+    // test getHeight
+    assert(abst_1.getHeight() == 0);
+    assert(abst_2.getHeight() == 5);
+    assert(abst_3.getHeight() == 5);
+    assert(abst_4.getHeight() == 4);
+    assert(abst_5.getHeight() == 4);
+    assert(abst_6.getHeight() == 4);
+
+    // test minValue, maxValue
+    assert(abst_3.minValue() == 2);
+    assert(abst_3.maxValue() == 40);
+    assert(abst_6.minValue() == 2);
+    assert(abst_6.maxValue() == 9);
+
+    // test countNodes
+    assert(abst_1.countNodes() == 0);
+    assert(abst_2.countNodes() == 31);
+    assert(abst_3.countNodes() == 15);
+    assert(abst_4.countNodes() == 7);
+    assert(abst_5.countNodes() == 7);
+    assert(abst_5.countNodes() == 7);
 
     return 0;
 }

@@ -96,7 +96,7 @@ private:
 
     void doublesize();
 
-    void reorganizeSubtree(size_t subtreeRootIndex);
+    void reorganizeSubtree(size_t subtreeRootIndex, size_t subtreeRootIndexMoveTo = -1);
 
     size_t findMinimumIndex(size_t currentIndex);
 
@@ -287,12 +287,12 @@ T ArrayBST<T, initValue, SIZE>::remove(size_t index, T value) {
             curr = 2 * curr + 1;
         }
     }
-    // so far, we should either find the appropriate index or bst[curr] = initValue
-    if (bst[curr] == initValue) {
+    // so far, we should either find the appropriate index or bst[curr] = initValue or curr > capacity
+    if (curr > capacity || bst[curr] == initValue) {
         // if node with value is not found
         throw std::runtime_error("value is not found in BST.");
     } else {
-        T ret;
+        T ret = -1;
         size_t leftChildIdx = curr * 2;
         size_t rightChildIdx = curr * 2 + 1;
         if (leftChildIdx < capacity && rightChildIdx < capacity) {
@@ -307,7 +307,7 @@ T ArrayBST<T, initValue, SIZE>::remove(size_t index, T value) {
                 ret = bst[curr];
                 bst[curr] = bst[leftChildIdx];
                 // update left subtree recursively
-                reorganizeSubtree(leftChildIdx);
+                reorganizeSubtree(leftChildIdx, curr);
                 count--;
             } else if (bst[leftChildIdx] == initValue && bst[rightChildIdx] != initValue) {
                 // scenario 2.2: partial internal node with a right child
@@ -315,7 +315,7 @@ T ArrayBST<T, initValue, SIZE>::remove(size_t index, T value) {
                 ret = bst[curr];
                 bst[curr] = bst[rightChildIdx];
                 // update right subtree recursively
-                reorganizeSubtree(rightChildIdx);
+                reorganizeSubtree(rightChildIdx, curr);
                 count--;
             } else if (bst[leftChildIdx] != initValue && bst[rightChildIdx] != initValue) {
                 // scenario 3: complete internal node with two children
@@ -329,8 +329,13 @@ T ArrayBST<T, initValue, SIZE>::remove(size_t index, T value) {
                 // it shouldn't have a left child, so only reorganizing its right subtree is necessary
                 // if the right subtree exists
                 bst[minimumNodeIndex] = initValue;
-                if (2 * minimumNodeIndex + 1 < capacity && bst[2 * minimumNodeIndex + 1] != initValue) {
-                    reorganizeSubtree(2 * minimumNodeIndex + 1);
+                if (2 * minimumNodeIndex + 1 <= capacity && bst[2 * minimumNodeIndex + 1] != initValue) {
+                    // move right value to the minimumIndex which is moved to root
+                    bst[minimumNodeIndex] = bst[2 * minimumNodeIndex + 1];
+                    // set right value to initVal
+                    bst[2 * minimumNodeIndex + 1] = initVal;
+                    // reorganize the right subtree
+                    reorganizeSubtree(2 * minimumNodeIndex + 1, minimumNodeIndex);
                 }
                 count--;
             }
@@ -427,6 +432,9 @@ void ArrayBST<T, initValue, SIZE>::levelOrder(size_t index) {
 
 template<typename T, T initValue, size_t SIZE>
 int ArrayBST<T, initValue, SIZE>::getHeight() {
+    if (isEmpty()) {
+        return 0;
+    }
     // find the maximum index with non-initValue
     int maximumIndex = 1;
     for (int i = static_cast<int>(capacity) - 1; i >= 0; --i) {
@@ -574,8 +582,8 @@ void ArrayBST<T, initValue, SIZE>::doublesize() {
 }
 
 template<typename T, T initValue, size_t SIZE>
-void ArrayBST<T, initValue, SIZE>::reorganizeSubtree(size_t subtreeRootIndex) {
-    if (subtreeRootIndex >= capacity) {
+void ArrayBST<T, initValue, SIZE>::reorganizeSubtree(size_t subtreeRootIndex, size_t subtreeRootIndexMoveTo) {
+    if (subtreeRootIndex > capacity) {
         return;
     }
     bst[subtreeRootIndex] = initVal;
@@ -583,50 +591,20 @@ void ArrayBST<T, initValue, SIZE>::reorganizeSubtree(size_t subtreeRootIndex) {
     size_t rightChildIndex = 2 * subtreeRootIndex + 1;
 
     // update left subtree
-    if (leftChildIndex < capacity && bst[leftChildIndex] != initVal) {
-        // assign left child to appropriate index at the above level
-        if (subtreeRootIndex % 2 == 0) {
-            // if root index is even, then assign
-            //      left child -> leftChildIndex / 2
-            //      right child -> rightChildIndex / 2 + 1
-            bst[leftChildIndex / 2] = bst[leftChildIndex];
-            // set current to initValue
-            bst[leftChildIndex] = initValue;
-            // update left subtree recursively
-            reorganizeSubtree(leftChildIndex);
-        } else {
-            // if root index is odd, then assign
-            //      left child -> (leftChildIndex-1) / 2
-            //      right child -> (rightChildIndex-1) / 2
-            bst[(leftChildIndex - 1) / 2] = bst[leftChildIndex];
-            // set current to initValue
-            bst[leftChildIndex] = initValue;
-            // update left subtree recursively
-            reorganizeSubtree(leftChildIndex);
-        }
+    if (leftChildIndex <= capacity && bst[leftChildIndex] != initVal) {
+        bst[subtreeRootIndexMoveTo * 2] = bst[leftChildIndex];
+        // set current to initValue
+        bst[leftChildIndex] = initValue;
+        // update left subtree recursively
+        reorganizeSubtree(leftChildIndex, subtreeRootIndexMoveTo * 2);
     }
     // update right subtree
     if (rightChildIndex < capacity && bst[rightChildIndex] != initVal) {
-        // assign right child to appropriate index at the above level
-        if (subtreeRootIndex % 2 == 0) {
-            // if root index is even, then assign
-            //      left child -> leftChildIndex / 2
-            //      right child -> rightChildIndex / 2 + 1
-            bst[rightChildIndex / 2 + 1] = bst[rightChildIndex];
-            // set current to initValue
-            bst[rightChildIndex] = initValue;
-            // update right subtree recursively
-            reorganizeSubtree(rightChildIndex);
-        } else {
-            // if root index is odd, then assign
-            //      left child -> (leftChildIndex-1) / 2
-            //      right child -> (rightChildIndex-1) / 2
-            bst[(rightChildIndex - 1) / 2] = bst[rightChildIndex];
-            // set current to initValue
-            bst[rightChildIndex] = initValue;
-            // update right subtree recursively
-            reorganizeSubtree(rightChildIndex);
-        }
+        bst[subtreeRootIndexMoveTo * 2 + 1] = bst[rightChildIndex];
+        // set current to initValue
+        bst[rightChildIndex] = initValue;
+        // update right subtree recursively
+        reorganizeSubtree(rightChildIndex, subtreeRootIndexMoveTo * 2 + 1);
     }
 }
 
