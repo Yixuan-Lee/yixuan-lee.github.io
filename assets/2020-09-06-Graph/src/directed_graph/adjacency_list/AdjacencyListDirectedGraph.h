@@ -68,19 +68,23 @@ public:
     AdjacencyListDirectedGraph();
 
     // constructor
-    AdjacencyListDirectedGraph(const vector<GraphVertex> vertices, const vector<GraphEdge> edges, int numberOfVertices, int numberOfEdges);
+    AdjacencyListDirectedGraph(vector<GraphVertex> vertices, vector<GraphEdge> edges, int numberOfVertices, int numberOfEdges);
 
     /////////////////////////// Big Five  ////////////////////////////
     // 1. destructor
     virtual ~AdjacencyListDirectedGraph();
 
-    // 2. copy constructor
+    // 2. copy constructor (shallow copy)
+    AdjacencyListDirectedGraph(const AdjacencyListDirectedGraph<T> &graph) = default;
 
-    // 3. copy assignment operator=
+    // 3. copy assignment operator= (shallow copy)
+    AdjacencyListDirectedGraph& operator=(const AdjacencyListDirectedGraph<T> &graph) = default;
 
     // 4. move constructor
+    AdjacencyListDirectedGraph(AdjacencyListDirectedGraph<T> &&graph) noexcept = default;
 
     // 5. move assignment operator=
+    AdjacencyListDirectedGraph& operator=(AdjacencyListDirectedGraph<T> &&graph) noexcept = default;
 
     //////////////////////////////////////////////////////////////////
 
@@ -93,9 +97,11 @@ public:
 
     void removeVertexByValue(T value);
 
-    void removeEdge(int startVertexId, int endVertexId);
+    void removeEdge(const pair<int, int> &edge);
 
-    void updateEdgeWeight(int startVertexId, int endVertexId, int weight);
+    vector<int> getEdgeWeight(const pair<int, int> &edge);
+
+    void updateEdgeWeight(const pair<int, int> &edge, int weight);
 
     void displayAdjList();
 
@@ -107,6 +113,8 @@ public:
 
     ////////////////////// Auxiliary Operations //////////////////////
     bool isEmpty() const;
+
+    void removeVertexFromSideAdjListById(int startVertexId, int endVertexId);
 
     //////////////////////////////////////////////////////////////////
 
@@ -147,8 +155,8 @@ AdjacencyListDirectedGraph<T>::AdjacencyListDirectedGraph() {
 // constructor
 template<typename T>
 AdjacencyListDirectedGraph<T>::AdjacencyListDirectedGraph(
-        const vector<AdjacencyListDirectedGraph<T>::GraphVertex> vertices,
-        const vector<AdjacencyListDirectedGraph<T>::GraphEdge> edges,
+        vector<AdjacencyListDirectedGraph<T>::GraphVertex> vertices,
+        vector<AdjacencyListDirectedGraph<T>::GraphEdge> edges,
         int numberOfVertices, int numberOfEdges) {
     if (vertices.size() != numberOfVertices || edges.size() != numberOfEdges) {
         throw std::runtime_error("invalid constructor: vertices mismatches with numberOfVertices, or edges mismatches with numberOfEdges.");
@@ -194,7 +202,6 @@ AdjacencyListDirectedGraph<T>::AdjacencyListDirectedGraph(
 template<typename T>
 AdjacencyListDirectedGraph<T>::~AdjacencyListDirectedGraph() {
     for (AdjacencyListNode *adjIt = adjacencyListHead; adjIt != nullptr; adjIt = adjIt->nextAdjNode) {
-        GraphVertex *vertexIt = adjIt->next;
         for (GraphVertex *vertexIt = adjIt->next; vertexIt != nullptr; vertexIt = adjIt->next) {
             adjIt->next = vertexIt->next;
             delete vertexIt;
@@ -249,13 +256,14 @@ template<typename T>
 void AdjacencyListDirectedGraph<T>::removeVertexById(int vertexId) {
     // check if the vertex id exists in the graph
     if (vertexId2AdjNode.count(vertexId) == 0) {
-        return;
+        throw std::runtime_error("invalid removeVertexById: vertex id does not exist in the graph.");
     }
     // 1. remove all the out-edges from the vertex
     AdjacencyListNode *vertexAdjNode = vertexId2AdjNode[vertexId];
     for (GraphVertex *vertexIt = vertexAdjNode->next; vertexIt != nullptr; vertexIt = vertexIt->next) {
         vertexAdjNode->next = vertexIt->next;
         delete vertexIt;
+        numberOfEdges--;
     }
 
     // 2. remove the adjacency node in main adjacency list
@@ -268,44 +276,11 @@ void AdjacencyListDirectedGraph<T>::removeVertexById(int vertexId) {
     // 2.2 remove the adjacency node of the vertex
     vertexAdjNode->nextAdjNode = nullptr;
     delete vertexAdjNode;
-    vertexAdjNode = nullptr;
+    numberOfVertices--;
 
     // 3. remove all the in-edges to the vertex from other vertices
     for (AdjacencyListNode *adjIt = adjacencyListHead; adjIt != nullptr; adjIt = adjIt->nextAdjNode) {
-        // check if the first few vertex nodes is the vertex
-        GraphVertex *vertexIt = adjIt->next;
-        while (vertexIt != nullptr && vertexIt->id == vertexId) {
-            // update the first vertex node in the current adjacency list
-            adjIt->next = vertexIt->next;
-            // delete the first vertex node
-            vertexIt->next = nullptr;
-            delete vertexIt;
-            // update the pointer to the first vertex node
-            vertexIt = adjIt->next;
-        }
-        if (vertexIt == nullptr) {
-            // current adjacency list is empty
-            continue;
-        }
-        // so far, the first vertex node's id in the current adjacency list is not vertexId
-
-        // remove the vertex node in the adjacency list of main adjacency node
-        GraphVertex *prev = vertexIt;
-        GraphVertex *curr = vertexIt->next;
-        while (curr != nullptr) {
-            if (curr->id == vertexId) {
-                // update prev's next
-                prev->next = curr->next;
-                // delete the node with the vertexId
-                curr->next = nullptr;
-                delete curr;
-                // update curr
-                curr = prev->next;
-            } else {
-                prev = curr;
-                curr = curr->next;
-            }
-        }
+        removeVertexFromSideAdjListById(adjIt->id, vertexId);
     }
 }
 
@@ -321,6 +296,54 @@ void AdjacencyListDirectedGraph<T>::removeVertexByValue(T value) {
     // remove all vertices with the id in vertexIds2Remove
     for (vector<int>::const_iterator it = vertexIds2Remove.cbegin(); it != vertexIds2Remove.cend(); ++it) {
         removeVertexById(*it);
+    }
+}
+
+template<typename T>
+void AdjacencyListDirectedGraph<T>::removeEdge(const pair<int, int> &edge) {
+    // check if two vertex ids are valid
+    int startVertexId = edge.first;
+    int endVertexId = edge.second;
+    if (!vertexId2AdjNode.count(startVertexId) || !vertexId2AdjNode.count(endVertexId)) {
+        throw std::runtime_error("invalid removeEdge: vertex ids are invalid.");
+    }
+    // 1. update adjacency list
+    removeVertexFromSideAdjListById(startVertexId, endVertexId);
+
+    // 2. update edges
+    edges.erase(edge);
+}
+
+template<typename T>
+vector<int> AdjacencyListDirectedGraph<T>::getEdgeWeight(const pair<int, int> &edge) {
+    // check if the edge exists
+    if (edges.count(edge) == 0) {
+        throw std::runtime_error("invalid getEdgeWeight: no edge between the vertices.");
+    }
+    // find all edges from startVertexId (edge.first) to endVertexId (edge.second)
+    typedef typename multimap<pair<int, int>, GraphEdge>::iterator MMAPIterator;
+    std::pair<MMAPIterator, MMAPIterator> bounds = edges.equal_range(edge);
+    // return the weights of all edges from startVertexId to endVertexId
+    vector<int> weights;
+    for (MMAPIterator it = bounds.first; it != bounds.second; ++it) {   // iterate over the range
+        weights.push_back(it->second.weight);
+    }
+    return weights;
+}
+
+template<typename T>
+void AdjacencyListDirectedGraph<T>::updateEdgeWeight(const pair<int, int> &edge, int weight) {
+    // check if the edge exists
+    if (edges.count(edge) == 0) {
+        throw std::runtime_error("invalid updateEdgeWeight: no edge between the vertices.");
+    }
+    // find all edges from startVertexId (edge.first) to endVertexId (edge.second)
+    typedef typename multimap<pair<int, int>, GraphEdge>::iterator MMAPIterator;
+    std::pair<MMAPIterator, MMAPIterator> bounds = edges.equal_range(edge);
+
+    // change the weights of all edges from startVertexId to endVertexId to weight
+    for (MMAPIterator it = bounds.first; it != bounds.second; ++it) {   // iterate over the range
+        it->second.weight = weight;
     }
 }
 
@@ -356,5 +379,43 @@ bool AdjacencyListDirectedGraph<T>::isEmpty() const {
     return numberOfVertices == 0;
 }
 
+template<typename T>
+void AdjacencyListDirectedGraph<T>::removeVertexFromSideAdjListById(int startVertexId, int endVertexId) {
+    AdjacencyListNode *startVertexAdjNode = vertexId2AdjNode[startVertexId];
+    GraphVertex *vertexIt = startVertexAdjNode->next;
+    while (vertexIt != nullptr && vertexIt->id == endVertexId) {
+        // update the first vertex node in the current adjacency list
+        startVertexAdjNode->next = vertexIt->next;
+        // delete the first vertex node
+        vertexIt->next = nullptr;
+        delete vertexIt;
+        numberOfEdges--;
+        // update the pointer to the first vertex node
+        vertexIt = startVertexAdjNode->next;
+    }
+    if (vertexIt == nullptr) {
+        // current adjacency list is empty
+        return;
+    }
+
+    // remove the subsequence vertex nodes with endVertexid
+    GraphVertex *prev = vertexIt;
+    GraphVertex *curr = vertexIt->next;
+    while (curr != nullptr) {
+        if (curr->id == endVertexId) {
+            // update prev's next
+            prev->next = curr->next;
+            // delete the node with the vertexId
+            curr->next = nullptr;
+            delete curr;
+            numberOfEdges--;
+            // update curr
+            curr = prev->next;
+        } else {
+            prev = curr;
+            curr = curr->next;
+        }
+    }
+}
 
 #endif //ADJACENCYLISTDIRECTEDGRAPH_H

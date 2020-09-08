@@ -1,13 +1,23 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <assert.h>
+#include <cassert>
 #include "AdjacencyListDirectedGraph.h"
 
 using std::cout;
 using std::endl;
 using std::vector;
 using std::string;
+using std::ostream;
+
+template<typename T>
+ostream& operator<<(ostream& os, const vector<T> &vec) {
+    for (typename vector<T>::const_iterator it = vec.cbegin(); it != vec.cend(); ++it) {
+        os << *it << " ";
+    }
+    return os;
+}
+
 
 int main() {
     // test default constructor, isEmpty
@@ -48,19 +58,21 @@ int main() {
             {9, 8, 13}
     };
     AdjacencyListDirectedGraph<string> graph_3(vertices_3, edges_3, vertices_3.size(), edges_3.size());
+    cout << "Before adding vertices and edges: " << endl;
     graph_3.displayAdjList();
     cout << "numberOfVertices = " << graph_3.getNumberOfVertices() << endl;
     cout << "numberOfEdges = " << graph_3.getNumberOfEdges() << endl;
     try {
         graph_3.addVertex(AdjacencyListDirectedGraph<string>::GraphVertex(4, "Hong Kong"));
-        graph_3.displayAdjList();
+        graph_3.addEdge(AdjacencyListDirectedGraph<string>::GraphEdge(3, 1, 1));
         graph_3.addEdge(AdjacencyListDirectedGraph<string>::GraphEdge(2, 4, 11));
         graph_3.addEdge(AdjacencyListDirectedGraph<string>::GraphEdge(4, 5, 19));
         graph_3.addEdge(AdjacencyListDirectedGraph<string>::GraphEdge(4, 9, 16));
-        graph_3.displayAdjList();
     } catch (const std::runtime_error &e) {
         cout << e.what() << endl;
     }
+    cout << "After adding vertices and edges: " << endl;
+    graph_3.displayAdjList();
     cout << "numberOfVertices = " << graph_3.getNumberOfVertices() << endl;
     cout << "numberOfEdges = " << graph_3.getNumberOfEdges() << endl;
     cout << "=============================================================\n";
@@ -69,9 +81,15 @@ int main() {
     const int vertexId2Remove = 5;
     cout << "Before removing vertex id " << vertexId2Remove << ": " << endl;
     graph_3.displayAdjList();
-    graph_3.removeVertexById(vertexId2Remove);
+    try {
+        graph_3.removeVertexById(vertexId2Remove);
+    } catch (const std::runtime_error &e) {
+        cout << e.what() << endl;
+    }
     cout << "After removing vertex id " << vertexId2Remove << ": " << endl;
     graph_3.displayAdjList();
+    cout << "numberOfVertices = " << graph_3.getNumberOfVertices() << endl;
+    cout << "numberOfEdges = " << graph_3.getNumberOfEdges() << endl;
     cout << "=============================================================\n";
 
     // test removeVertexByValue
@@ -81,6 +99,47 @@ int main() {
     graph_3.removeVertexByValue(vertexValue2Remove);
     cout << "After removing vertex value " << vertexValue2Remove << ": " << endl;
     graph_3.displayAdjList();
+    cout << "numberOfVertices = " << graph_3.getNumberOfVertices() << endl;
+    cout << "numberOfEdges = " << graph_3.getNumberOfEdges() << endl;
+    cout << "=============================================================\n";
+
+    // test getEdgeWeight, updateEdgeWeight
+    const std::pair<int, int> edge2update = std::make_pair(3, 1);
+    cout << "Before updating the weight on edge 3->1: " << endl;
+    try {
+        // print the weight(s) of the edge(s)
+        cout << graph_3.getEdgeWeight(edge2update) << endl;
+    }  catch (const std::runtime_error &e) {
+        cout << e.what() << endl;
+    }
+    try {
+        // update the weight(s) of the edge(s)
+        graph_3.updateEdgeWeight(edge2update, 3);
+    }  catch (const std::runtime_error &e) {
+        cout << e.what() << endl;
+    }
+    cout << "After updating the weight on edge 3->1: " << endl;
+    try {
+        // print the weight(s) of the edge(s)
+        cout << graph_3.getEdgeWeight(edge2update) << endl;
+    }  catch (const std::runtime_error &e) {
+        cout << e.what() << endl;
+    }
+    cout << "=============================================================\n";
+
+    // test removeEdge
+    cout << "Before removing edge 7->6 and edges 3->1: " << endl;
+    graph_3.displayAdjList();
+    try {
+        graph_3.removeEdge(std::make_pair(7, 6));
+        graph_3.removeEdge(std::make_pair(3, 1));
+    } catch (const std::runtime_error &e) {
+        cout << e.what() << endl;
+    }
+    cout << "After removing edge 7->6: " << endl;
+    graph_3.displayAdjList();
+    cout << "numberOfVertices = " << graph_3.getNumberOfVertices() << endl;
+    cout << "numberOfEdges = " << graph_3.getNumberOfEdges() << endl;
     cout << "=============================================================\n";
 
     return 0;
