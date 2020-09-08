@@ -12,4 +12,5 @@ package.json
 **/.idea
 **/CMakeLists.txt
 **/cmake-build-debug
+*.psd
 
